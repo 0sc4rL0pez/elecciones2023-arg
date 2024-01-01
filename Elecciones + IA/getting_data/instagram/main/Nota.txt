@@ -1,0 +1,31 @@
+Para obtener informacion se utilizo principalmente de la libreria de instaloader
+
+/comentarios_iteradores:
+	Hay iteradores donde se fueron recopilando cantidad de comentarios de cada publicacion (descartado)
+
+/iteradoresV2:
+	Se encuentran iteradores para guardar informacion de forma secuencial, para largos periodos de tiempo
+
+/iteradoresV2_new:
+	Se encuentran iteradores para actualizar informacion, para cortos periodos de tiempo. Tienen que ser eliminados una vez terminada la actualizacion 
+
+/old_versions:
+	Esta la primera version para sacar info
+
+----------------------------------------------------------------------
+
+To obtain information, I used mainly a  library called Instaloader 
+
+/comentarios_iteradores:
+There are iterators where the number of comments from each publication was collected (discarded)
+
+/iteradoresV2:
+Iterators are found to store information sequentially, for long periods of time.
+
+/iteradoresV2_new:
+Iterators are found to update information, for short periods of time. They have to be deleted once the update is finished.
+
+/old_versions:
+This is the first version of the main program
+
+

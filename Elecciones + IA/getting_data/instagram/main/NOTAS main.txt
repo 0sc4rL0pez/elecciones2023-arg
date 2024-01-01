@@ -1,0 +1,49 @@
+# NOTAS main
+
+Previamente es necesario crear un archivo JSON que haga referencia a la sesion de algún usuario
+
+Para hacer esto:
+	-Inicias sesion de alguna cuenta de instagram en el mozilla firefox
+	- Abri la consola y ejecutar '615_import_firefox_session.py'
+
+(Es posible crear multiples archivos para trabajar con sesiones en paralelos)
+
+Luego necesitas los nombres de usuarios con cuenta pública para sacar informacion
+
+Los intervalos para sacar informacion son de 60 minutos para un solo usuario con un limite de 100 recopilaciones (Revisar la API de Meta para mas información)
+Este limite puede ser modificado de ser necesario. Yo utilizaba un intervalo de 20 minutos rotando con 3 usuarios.
+
+La funcion get_data(login_user, target_user,mode,dia_hasta) tiene dos modos: 
+	'NEW': Para actualizar datos de publicaciones recientes con un limite inferior de fechas
+	'OLD': Para recopilar datos sin limites de fechas
+
+Es posible que salten errores si se utiliza el algoritmo por mucho tiempo, lo aconsejable es:
+	-eliminar la memoria en forma de caché en los navegadores
+	-Actualizar los archivos JSON del principio
+
+-------------------------------------------------------------------------
+
+# NOTES main
+
+Previously, it is necessary to create a JSON file that refers to a user's session.
+
+To do this:
+-You log in to an Instagram account in Mozilla Firefox
+- Open the console and run '615_import_firefox_session.py'
+
+(It is possible to create multiple files to work with sessions in parallel)
+
+Then you need the names of users with a public account to obtain information
+
+The intervals to extract information are 60 minutes for a single user with a limit of 100 posts (Check the Meta API for more information)
+This limit can be modified if necessary. I used a 20 minute interval rotating with 3 users.
+
+get_data(login_user, target_user, mode, day_until) function has two modes:
+'NEW': To update recent publication data with a date limit
+'OLD': To collect data without date limits
+
+It is possible that errors may occur if the algorithm is used for a long time, it is advisable to:
+-remove cache memory in browsers
+-Update the user´s JSON files
+
+
