@@ -30,7 +30,7 @@ if visualizacion==etapas[0]:
     
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
-    agrupado = df_predicc.groupby(['Inicio']).mean()[partidos + ['Scores']].reset_index()
+    agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     fecha_selec = st.select_slider(
     'Predicho por el modelo',
     options=agrupado['Inicio'].values.tolist())
@@ -63,7 +63,7 @@ elif visualizacion==etapas[1]:
     
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
-    agrupado = df_predicc.groupby(['Inicio']).mean()[partidos + ['Scores']].reset_index()
+    agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     fecha_selec = st.select_slider(
     'Predicho por el modelo',
     options=agrupado['Inicio'].values.tolist())
