@@ -15,7 +15,7 @@ if visualizacion==etapas[0]:
     st.subheader('Primera vuelta')
     st.text("Encuestas en función del tiempo (Wikipedia)")
 
-    df = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/dashboard/primera_vuelta_poly_encuestas.csv')
+    df = pd.read_csv('elecciones2023-arg/Elecciones + IA/dashboard/primera_vuelta_poly_encuestas.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
@@ -32,7 +32,7 @@ if visualizacion==etapas[0]:
                     size=40,width=1200,height=350)
     
     st.subheader('Modelo predictivo')
-    df_predicc = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
+    df_predicc = pd.read_csv('elecciones2023-arg/Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean()[partidos + ['Scores']].reset_index()
     fecha_selec = st.select_slider(
     'Predicho por el modelo',
@@ -48,7 +48,7 @@ elif visualizacion==etapas[1]:
     st.subheader('Ballotaje')
     st.text("Encuestas en función del tiempo (Wikipedia)")
 
-    df = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_solo_ballotaje.csv')
+    df = pd.read_csv('elecciones2023-arg/Elecciones + IA/getting_data/encuestas/Encuestas_solo_ballotaje.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
@@ -65,7 +65,7 @@ elif visualizacion==etapas[1]:
                     size=50,width=1200,height=350)
     
     st.subheader('Modelo predictivo')
-    df_predicc = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
+    df_predicc = pd.read_csv('elecciones2023-arg/Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean()[partidos + ['Scores']].reset_index()
     fecha_selec = st.select_slider(
     'Predicho por el modelo',
@@ -79,7 +79,7 @@ elif visualizacion==etapas[1]:
 
 elif visualizacion==etapas[2]:
     st.subheader('Cantidad recolectado')
-    df_recopilado = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/data_base/data_base_csv/Fuentes.csv')
+    df_recopilado = pd.read_csv('elecciones2023-arg/Elecciones + IA/data_base/data_base_csv/Fuentes.csv')
     df_recopilado.sort_values(by='cant_publicaciones',inplace=True)
     df_recopilado.rename(columns={'nombre':'Fuente','cant_publicaciones':'Publicaciones totales','cant_recopilado':'Publicaciones descargadas'},inplace=True)
     st.bar_chart(df_recopilado,x ='Fuente',y=['Publicaciones totales','Publicaciones descargadas'],height=350,use_container_width=True)
@@ -87,7 +87,7 @@ elif visualizacion==etapas[2]:
     st.subheader('Publicaciones y me gusta')
     
     st.text("Cantidad de publicaciones")
-    df_megusta_pub_pol = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/modeling/Preparando_datos/publicaciones_politicas.csv')
+    df_megusta_pub_pol = pd.read_csv('elecciones2023-arg/Elecciones + IA/modeling/Preparando_datos/publicaciones_politicas.csv')
     partidos = df_megusta_pub_pol['Partido'].unique()
     df_cant_publi = df_megusta_pub_pol['Partido'].value_counts(ascending=True)
     st.bar_chart(df_cant_publi)
