@@ -68,7 +68,8 @@ if visualizacion==etapas[1]:
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
     aux_df['porcentajes'] = np.array(porcentajes).flatten()
-    aux_df['partido'] = options
+    aux_df['partido'] = options
+
     pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
             theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
             color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
@@ -115,7 +116,8 @@ porcentajes = []
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
     aux_df['porcentajes'] = np.array(porcentajes).flatten()
-    aux_df['partido'] = options
+    aux_df['partido'] = options
+
     pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
             theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
             color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
