@@ -70,9 +70,9 @@ elif visualizacion==etapas[2]:
     options=agrupado['Inicio'].values.tolist())
 
     #color=list(np.array(colores,dtype=str)[[4,3,1,2,0]]
-    df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
+    df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
     st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2)))
-    df_fecha_selec.rename(index={0:'Porcentaje'},inplace=True)
+    df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
     st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
 
 elif visualizacion==etapas[0]:
