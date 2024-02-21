@@ -74,9 +74,9 @@ if visualizacion==etapas[1]:
             theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
             color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
     )
-    text = pie.mark_text(radius=150, size=15).encode(text="Porcentaje")
+    #text = pie.mark_text(radius=150, size=15).encode(text="Porcentaje")
 
-    st.altair_chart(pie+text, theme=None, use_container_width=True)
+    st.altair_chart(pie, theme=None, use_container_width=True)
 
 elif visualizacion==etapas[2]:
     st.subheader('Ballotaje')
