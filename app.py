@@ -24,10 +24,6 @@ if visualizacion==etapas[1]:
         'Partidos: ',partidos,
         default=partidos[:3],
         placeholder='Elije una opción')
-
-    idx_colors = [partidos.index(x) for x in options]
-    #st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
-    #                size=40,width=1200,height=350)
     
     para_concatenar = []
     lista_partidos = []
@@ -44,7 +40,7 @@ if visualizacion==etapas[1]:
     linea = alt.Chart(df_aux).mark_circle(size=40).encode(
         x='Fecha',
         y='Porcentaje',
-        color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='bottom',columns = 3)
+        color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='bottom',columns = 3,symbolSize=200)
     ).properties(
             width=700,
             height=320
