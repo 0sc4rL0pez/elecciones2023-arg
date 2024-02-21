@@ -186,13 +186,13 @@ elif visualizacion==etapas[0]:
     sum_cant_likes = df_megusta['cantidad_likes'].sum()
 
     if unidades1=='Porcentaje':
-        df_cant_publi['cantidad'] = df_cant_publi['Partido'].map(lambda x: round(100*float(x)/sum_cant_pub,1))
+        df_cant_publi['cantidad'] = df_cant_publi['index'].map(lambda x: round(100*float(x)/sum_cant_pub,1))
     elif unidades1 == 'miles':
-        df_cant_publi['cantidad'] = df_cant_publi['Partido'].map(lambda x: round(float(x)/1000,1))
+        df_cant_publi['cantidad'] = df_cant_publi['index'].map(lambda x: round(float(x)/1000,1))
     
     pie = alt.Chart(df_cant_publi).mark_arc(innerRadius=60,outerRadius=120).encode(
         theta=alt.Theta(field="Partido", type="quantitative",stack=True),
-        color=alt.Color('index').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+        color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
     )
     text = pie.mark_text(radius=150, size=15).encode(text="cantidad")
     
