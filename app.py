@@ -64,6 +64,14 @@ if visualizacion==etapas[1]:
     df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
 
+    pie = alt.Chart(df_fecha_selec).mark_arc(innerRadius=60,outerRadius=120).encode(
+            theta=alt.Theta(field="Porcentaje", type="quantitative",stack=True),
+            color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+    )
+    text = pie.mark_text(radius=150, size=15).encode(text="Porcentaje")
+
+    st.altair_chart(pie+text, theme=None, use_container_width=True)
+
 elif visualizacion==etapas[2]:
     st.subheader('Ballotaje')
     st.text("Encuestas en función del tiempo (Wikipedia)")
