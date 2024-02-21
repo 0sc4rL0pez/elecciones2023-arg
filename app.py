@@ -63,10 +63,16 @@ if visualizacion==etapas[1]:
     df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
     
+    porcentajes = []
+    for p in options:
+        porcentajes.append(df_fecha_selec[p].values.tolist())
+    aux_df = pd.DataFrame()
+    aux_df['porcentajes'] = np.array(porcentajes).flatten()
+    aux_df['partido'] = options
     #partido no esta definido como column
-    pie = alt.Chart(df_fecha_selec[options].T).mark_arc(innerRadius=60,outerRadius=120).encode(
-            theta=alt.Theta(field="Porcentaje", type="quantitative",stack=True),
-            color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+    pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
+            theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
+            color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
     )
     text = pie.mark_text(radius=150, size=15).encode(text="Porcentaje")
 
