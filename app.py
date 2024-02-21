@@ -28,6 +28,7 @@ if visualizacion==etapas[1]:
     idx_colors = [partidos.index(x) for x in options]
     st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
                     size=40,width=1200,height=350)
+    
     para_concatenar = []
     lista_partidos = []
     df_aux = pd.DataFrame()
@@ -39,11 +40,15 @@ if visualizacion==etapas[1]:
         df_aux['Partido'] = lista_partidos
         df_aux['Fecha'] = np.array(len(options)*df['Fecha'].values.tolist()).flatten()
         df_aux['Fecha'] = pd.to_datetime(df_aux['Fecha'])
+        
     linea = alt.Chart(df_aux).mark_line().encode(
         x='Fecha',
         y='Porcentaje',
-        color = 'Partido'
-    )
+        color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='bottom',columns = 3)
+    ).properties(
+            width=400,
+            height=250
+        )
     
     st.altair_chart(linea)
     st.subheader('Modelo predictivo')
