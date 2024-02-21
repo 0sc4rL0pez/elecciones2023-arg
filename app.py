@@ -28,10 +28,19 @@ if visualizacion==etapas[1]:
     idx_colors = [partidos.index(x) for x in options]
     st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
                     size=40,width=1200,height=350)
-    
+    para_concatenar = []
+    lista_partidos = []
+    for p in options:
+        para_concatenar.append(df[p].values.tolist())
+        lista_partidos += len(df)*[p]
+    if len(para_concatenar)>0:
+        df['Porcentaje] = pd.concat(para_concatenar)
+        df['Partido'] = lista_partidos
+        
     linea = alt.Chart(df).mark_line().encode(
         x='Fecha',
-        y=options[0]
+        y='Porcentaje',
+        color = 'Partido'
     )
     
     st.altair_chart(linea)
