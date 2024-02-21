@@ -58,12 +58,12 @@ if visualizacion==etapas[1]:
     'Predicho por el modelo',
     options=agrupado['Inicio'].values.tolist())
 
-    #color=list(np.array(colores,dtype=str)[[4,3,1,2,0]]
     df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
     st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2)))
     df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
-
+    
+    #partido no esta definido como column
     pie = alt.Chart(df_fecha_selec[options].T).mark_arc(innerRadius=60,outerRadius=120).encode(
             theta=alt.Theta(field="Porcentaje", type="quantitative",stack=True),
             color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
