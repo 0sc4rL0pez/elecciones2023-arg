@@ -31,7 +31,7 @@ if visualizacion==etapas[1]:
     para_concatenar = []
     lista_partidos = []
     for p in options:
-        para_concatenar.append(df[p].values.tolist())
+        para_concatenar += df[p].values.tolist()
         lista_partidos += len(df)*[p]
     if len(para_concatenar)>0:
         df['Porcentaje] = pd.concat(para_concatenar)
