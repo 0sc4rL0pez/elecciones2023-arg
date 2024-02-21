@@ -29,6 +29,11 @@ if visualizacion==etapas[1]:
     st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
                     size=40,width=1200,height=350)
     
+    linea = alt.Chart(df).mark_line().encode(
+        x='Fecha',
+        y=options
+    )
+    
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
