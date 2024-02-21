@@ -33,7 +33,7 @@ if visualizacion==etapas[1]:
         x='Fecha',
         y=options
     )
-    
+    st.altair_chart(linea)
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
