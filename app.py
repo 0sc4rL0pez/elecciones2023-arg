@@ -37,7 +37,7 @@ if visualizacion==etapas[1]:
     if len(para_concatenar)>0:
         df_aux['Porcentaje'] = para_concatenar
         df_aux['Partido'] = lista_partidos
-        df_aux['Fecha'] = list(zip(len(options)*df['Fecha'].values.tolist()))
+        df_aux['Fecha'] = np.array(zip(len(options)*df['Fecha'].values.tolist())).flatten()
         df_aux['Fecha'] = pd.to_datetime(df_aux['Fecha'])
     linea = alt.Chart(df_aux).mark_line().encode(
         x='Fecha',
