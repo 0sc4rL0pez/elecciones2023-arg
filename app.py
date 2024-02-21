@@ -31,8 +31,9 @@ if visualizacion==etapas[1]:
     
     linea = alt.Chart(df).mark_line().encode(
         x='Fecha',
-        y=options
+        y=options[0]
     )
+    
     st.altair_chart(linea)
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
