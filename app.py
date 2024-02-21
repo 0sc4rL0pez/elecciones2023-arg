@@ -46,8 +46,8 @@ if visualizacion==etapas[1]:
         y='Porcentaje',
         color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='bottom',columns = 3)
     ).properties(
-            width=400,
-            height=250
+            width=1200,
+            height=350
         )
     
     st.altair_chart(linea)
