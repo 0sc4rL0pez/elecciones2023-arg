@@ -30,14 +30,16 @@ if visualizacion==etapas[1]:
                     size=40,width=1200,height=350)
     para_concatenar = []
     lista_partidos = []
+    df_aux = pd.DataFrame()
     for p in options:
         para_concatenar += df[p].values.tolist()
         lista_partidos += len(df)*[p]
     if len(para_concatenar)>0:
-        df['Porcentaje'] = para_concatenar
-        df['Partido'] = lista_partidos
+        df_aux['Porcentaje'] = para_concatenar
+        df_aux['Partido'] = lista_partidos
+        df_aux['Fecha'] = list(zip(len(options)*df['fecha'].values.tolist()))
         
-    linea = alt.Chart(df).mark_line().encode(
+    linea = alt.Chart(df_aux).mark_line().encode(
         x='Fecha',
         y='Porcentaje',
         color = 'Partido'
