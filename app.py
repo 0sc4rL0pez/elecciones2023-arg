@@ -34,7 +34,7 @@ if visualizacion==etapas[1]:
         para_concatenar += df[p].values.tolist()
         lista_partidos += len(df)*[p]
     if len(para_concatenar)>0:
-        df['Porcentaje'] = pd.concat(para_concatenar)
+        df['Porcentaje'] = para_concatenar
         df['Partido'] = lista_partidos
         
     linea = alt.Chart(df).mark_line().encode(
