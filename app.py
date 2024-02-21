@@ -111,7 +111,7 @@ elif visualizacion==etapas[2]:
     df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
     #st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
 
-porcentajes = []
+    porcentajes = []
     for p in options:
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
