@@ -26,7 +26,7 @@ if visualizacion==etapas[1]:
         placeholder='Elije una opción')
 
     idx_colors = [partidos.index(x) for x in options]
-    st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
+    #st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
                     size=40,width=1200,height=350)
     
     para_concatenar = []
