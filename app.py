@@ -108,7 +108,22 @@ elif visualizacion==etapas[2]:
     df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
     st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2)))
     df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
-    st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
+    #st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
+
+porcentajes = []
+    for p in options:
+        porcentajes.append(df_fecha_selec[p].values.tolist())
+    aux_df = pd.DataFrame()
+    aux_df['porcentajes'] = np.array(porcentajes).flatten()
+    aux_df['partido'] = options
+    pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
+            theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
+            color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+    )
+    text = pie.mark_text(radius=150, size=15).encode(text="porcentaje")
+
+    st.altair_chart(pie+text, theme=None, use_container_width=True)
+
 
 elif visualizacion==etapas[0]:
     ################################# DATOS #######################################################
