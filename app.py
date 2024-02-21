@@ -180,6 +180,7 @@ elif visualizacion==etapas[0]:
 
     if len(para_concatenar)>0:
         df_megusta_pub_pol = pd.concat(para_concatenar)
+        
     df_cant_publi = df_megusta_pub_pol['Partido'].value_counts(ascending=True).reset_index()
     df_megusta = df_megusta_pub_pol.groupby('Partido').sum()['cantidad_likes'].reset_index()
     sum_cant_pub = df_cant_publi[df_cant_publi.columns[1]].sum()
@@ -191,7 +192,7 @@ elif visualizacion==etapas[0]:
         df_cant_publi['cantidad'] = df_cant_publi[df_cant_publi.columns[1]].map(lambda x: round(float(x)/1000,1))
     
     pie = alt.Chart(df_cant_publi).mark_arc(innerRadius=60,outerRadius=120).encode(
-        theta=alt.Theta(field="Partido", type="quantitative",stack=True),
+        theta=alt.Theta(field="cantidad", type="quantitative",stack=True),
         color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
     )
     text = pie.mark_text(radius=150, size=15).encode(text="cantidad")
