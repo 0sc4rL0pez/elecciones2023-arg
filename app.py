@@ -40,7 +40,9 @@ if visualizacion==etapas[1]:
     linea = alt.Chart(df_aux).mark_circle(size=40).encode(
         x='Fecha',
         y='Porcentaje',
-        color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='bottom',columns = 3,labelFontSize=9)
+        color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(
+            orient='bottom',columns = 3,labelFontSize=9,symbolSize=150
+        )
     ).properties(
             width=700,
             height=320
