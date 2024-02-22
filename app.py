@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
-import locale
-locale.setlocale(locale.LC_ALL, 'es_ES.utf8')
 
 etapas = ('Datos','Primera vuelta', 'Ballotage')
 visualizacion = st.sidebar.selectbox('Visualizar: ',etapas)
