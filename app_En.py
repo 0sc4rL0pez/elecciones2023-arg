@@ -169,7 +169,7 @@ elif visualizacion==etapas[0]:
         df_recopilado = pd.concat(para_concatenar)
 
     aux = pd.concat([df_recopilado[['nombre','cant_publicaciones']],df_recopilado.rename(columns=dict(zip(df_recopilado.columns,['a','nombre','c','d','cant_publicaciones'])))[['nombre','cant_publicaciones']]],axis=0)
-    aux['Type'] = len(df_recopilado)*['Publicaciones totales'] + len(df_recopilado)*['Cantidad descargada']
+    aux['Type'] = len(df_recopilado)*['Total posts'] + len(df_recopilado)*['Amount downloaded']
 
     bar = alt.Chart(aux).mark_bar().encode(
         alt.X('Type').axis(labels=False,title=' '),
@@ -185,7 +185,7 @@ elif visualizacion==etapas[0]:
 
     st.header('Political posts*')
 
-    politicasYNormales = pd.read_csv('Elecciones + IA/data_base/data_base_csv/politicasYnormales.csv')
+    politicasYNormales = pd.read_csv('Elecciones + IA/data_base/data_base_csv/politicasYnormales_EN.csv')
     politicasYNormales = politicasYNormales.rename(columns={'Tipo':'Type', 'Fuente':'Source'})
     para_concatenar = []
     for p in options_fuente:
