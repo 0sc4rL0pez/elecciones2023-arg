@@ -189,7 +189,7 @@ elif visualizacion==etapas[0]:
     politicasYNormales = politicasYNormales.rename(columns={'Tipo':'Type', 'Fuente':'Source'})
     para_concatenar = []
     for p in options_fuente:
-        para_concatenar.append(politicasYNormales[politicasYNormales['Fuente']==p])
+        para_concatenar.append(politicasYNormales[politicasYNormales['Source']==p])
     if len(para_concatenar)>0:
         politicasYNormales = pd.concat(para_concatenar)
 
