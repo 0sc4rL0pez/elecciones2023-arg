@@ -57,7 +57,7 @@ if visualizacion==etapas[1]:
     options=agrupado['Inicio'].values.tolist())
 
     df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
-    st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2)))+" *"
+    st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2))+" *")
     df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     #st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
     
