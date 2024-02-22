@@ -260,7 +260,7 @@ elif visualizacion==etapas[0]:
     
     pie = alt.Chart(df_cant_publi).mark_arc(innerRadius=60,outerRadius=120).encode(
         theta=alt.Theta(field="cantidad", type="quantitative",stack=True),
-        color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+        color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1,title='Party')
     )
     text = pie.mark_text(radius=150, size=15).encode(text="cantidad")
     
