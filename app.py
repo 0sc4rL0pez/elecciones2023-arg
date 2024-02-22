@@ -37,18 +37,18 @@ if visualizacion==etapas[1]:
         df_aux['Fecha'] = np.array(len(options)*df['Fecha'].values.tolist()).flatten()
         df_aux['Fecha'] = pd.to_datetime(df_aux['Fecha'])
         
-    linea = alt.Chart(df_aux).mark_circle(size=40).encode(
-        x='Fecha',
-        y='Porcentaje',
-        color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(
-            orient='bottom',columns = 3,labelFontSize=12,symbolSize=120
-        )
-    ).properties(
-            width=700,
-            height=320
-        )
-    
-    st.altair_chart(linea)
+        linea = alt.Chart(df_aux).mark_circle(size=40).encode(
+            x='Fecha',
+            y='Porcentaje',
+            color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(
+                orient='bottom',columns = 3,labelFontSize=12,symbolSize=120
+            )
+        ).properties(
+                width=700,
+                height=320
+            )
+        
+        st.altair_chart(linea)
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
