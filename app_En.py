@@ -238,7 +238,7 @@ elif visualizacion==etapas[0]:
     st.subheader("Total posts")
     unidades1 = st.radio(
         "Unit of measurement",
-        ["Percentage", "thousands"]
+        ["Percentage", "Thousands"]
         )
 
     para_concatenar = []
@@ -269,7 +269,7 @@ elif visualizacion==etapas[0]:
     st.subheader("Likes")
     unidades2 = st.radio(
         "Unit of measurement",
-        ["Percentage", "millions"]
+        ["Percentage", "Millions"]
     )
     if unidades2=='Percentage':
         df_megusta['cantidad'] = df_megusta['cantidad_likes'].map(lambda x: round(100*float(x)/sum_cant_likes,1))
