@@ -67,14 +67,14 @@ if visualizacion==etapas[1]:
     aux_df = pd.DataFrame()
     aux_df['porcentajes'] = np.array(porcentajes).flatten()
     aux_df['Partido'] = options
-
-    pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
-            theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
-            color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
-    )
-    text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
-
-    st.altair_chart(pie+text, theme=None, use_container_width=True)
+    if len(options)>0:
+        pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
+                theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
+                color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+        )
+        text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
+    
+        st.altair_chart(pie+text, theme=None, use_container_width=True)
     st.caption("*MSE: Error cuadrático medio")
 elif visualizacion==etapas[2]:
     st.subheader('Ballotaje')
