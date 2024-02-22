@@ -122,9 +122,10 @@ elif visualizacion==etapas[2]:
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
-    fecha_selec = st.select_slider(
-    'Predicho por el modelo',
-    options=agrupado['Inicio'].values.tolist())
+    if len(options)>0:
+        fecha_selec = st.select_slider(
+        'Fecha a predecir',
+        options=agrupado['Inicio'].values.tolist())
 
     #color=list(np.array(colores,dtype=str)[[4,3,1,2,0]]
     df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
@@ -138,14 +139,14 @@ elif visualizacion==etapas[2]:
     aux_df = pd.DataFrame()
     aux_df['porcentajes'] = np.array(porcentajes).flatten()
     aux_df['Partido'] = options
-
-    pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
-            theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
-            color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
-    )
-    text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
-
-    st.altair_chart(pie+text, theme=None, use_container_width=True)
+    if len(options)>0:
+        pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
+                theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
+                color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+        )
+        text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
+    
+        st.altair_chart(pie+text, theme=None, use_container_width=True)
 
 
 elif visualizacion==etapas[0]:
