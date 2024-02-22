@@ -126,7 +126,7 @@ elif visualizacion==etapas[2]:
         options=agrupado['Inicio'].values.tolist())
 
         df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
-        st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2)))
+        st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2))+" *")
         df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
 
     porcentajes = []
@@ -143,7 +143,7 @@ elif visualizacion==etapas[2]:
         text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
     
         st.altair_chart(pie+text, theme=None, use_container_width=True)
-
+    st.caption("* MSE: Error cuadrático medio")
 
 elif visualizacion==etapas[0]:
     ################################# DATOS #######################################################
