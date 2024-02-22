@@ -186,7 +186,7 @@ elif visualizacion==etapas[0]:
     
     st.altair_chart(bar,use_container_width=False)
 
-    st.header('Publicaciones políticas')
+    st.header('Publicaciones políticas*')
 
     politicasYNormales = pd.read_csv('Elecciones + IA/data_base/data_base_csv/politicasYnormales.csv')
 
@@ -209,7 +209,7 @@ elif visualizacion==etapas[0]:
     st.altair_chart(bar,use_container_width=False)
 
     partidosYFuentes = pd.read_csv('Elecciones + IA/data_base/data_base_csv/partidosYfuentes.csv')
-
+    st.caption("Una publicación es política si en la descripción del mismo se encuentran al menos un apellido o nombre completo de alguno candidatos  o el nombre del partido en cuestión")
     st.subheader('Fuentes y publicaciones políticas')
 
     para_concatenar = []
@@ -230,7 +230,7 @@ elif visualizacion==etapas[0]:
 
     st.altair_chart(bar,use_container_width=False)
 
-    st.header   ("Publicaciones y partidos políticos")
+    st.header("Publicaciones y partidos políticos")
 
     options_partidos = st.multiselect(
         'Partido: ',partidos,
@@ -286,5 +286,6 @@ elif visualizacion==etapas[0]:
     text = pie.mark_text(radius=150, size=15).encode(text="cantidad")
 
     st.altair_chart(pie+text, theme=None, use_container_width=True)
+    
 
 
