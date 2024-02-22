@@ -143,7 +143,7 @@ elif visualizacion==etapas[2]:
         text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
     
         st.altair_chart(pie+text, theme=None, use_container_width=True)
-    st.caption("* MSE: Error cuadrático medio")
+    st.caption("*MSE: Error cuadrático medio")
 
 elif visualizacion==etapas[0]:
     ################################# DATOS #######################################################
