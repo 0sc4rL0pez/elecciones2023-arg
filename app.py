@@ -209,7 +209,7 @@ elif visualizacion==etapas[0]:
     st.altair_chart(bar,use_container_width=False)
 
     partidosYFuentes = pd.read_csv('Elecciones + IA/data_base/data_base_csv/partidosYfuentes.csv')
-    st.caption("Una publicación es política si en la descripción del mismo se encuentran al menos un apellido o nombre completo de alguno candidatos  o el nombre del partido en cuestión")
+    st.caption("*Una publicación es política si en la descripción del mismo se encuentran al menos un apellido o nombre completo de alguno candidatos  o el nombre del partido en cuestión")
     st.subheader('Fuentes y publicaciones políticas')
 
     para_concatenar = []
