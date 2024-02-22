@@ -217,7 +217,7 @@ elif visualizacion==etapas[0]:
     
     partidosYFuentes = partidosYFuentes.rename(columns={'Partido':'Party', 'fuente':'Source'})
     bar = alt.Chart(partidosYFuentes).mark_bar().encode(
-        alt.X('Partido').axis(labels=False,title=' '),
+        alt.X('Party').axis(labels=False,title=' '),
         alt.Y('Cantidad',type = 'quantitative').axis(title=' '),
         alt.Column('Source',type='nominal'),
         alt.Color('Party',type = 'nominal').scale(domain=partidos, range=colores).legend(orient='bottom',title=' ',columns=3),
