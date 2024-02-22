@@ -253,9 +253,9 @@ elif visualizacion==etapas[0]:
     sum_cant_pub = df_cant_publi[df_cant_publi.columns[1]].sum()
     sum_cant_likes = df_megusta['cantidad_likes'].sum()
 
-    if unidades1=='Porcentaje':
+    if unidades1=='Percentage':
         df_cant_publi['cantidad'] = df_cant_publi[df_cant_publi.columns[1]].map(lambda x: round(100*float(x)/sum_cant_pub,1))
-    elif unidades1 == 'miles':
+    elif unidades1 == 'thousands':
         df_cant_publi['cantidad'] = df_cant_publi[df_cant_publi.columns[1]].map(lambda x: round(float(x)/1000,1))
     
     pie = alt.Chart(df_cant_publi).mark_arc(innerRadius=60,outerRadius=120).encode(
@@ -271,9 +271,9 @@ elif visualizacion==etapas[0]:
         "Unit of measurement",
         ["Percentage", "millions"]
     )
-    if unidades2=='Porcentaje':
+    if unidades2=='Percentage':
         df_megusta['cantidad'] = df_megusta['cantidad_likes'].map(lambda x: round(100*float(x)/sum_cant_likes,1))
-    elif unidades2 == 'millones':
+    elif unidades2 == 'millions':
         df_megusta['cantidad'] = df_megusta['cantidad_likes'].map(lambda x: round(float(x)/1000000,1))
     
     pie = alt.Chart(df_megusta).mark_arc(innerRadius=60,outerRadius=120).encode(
