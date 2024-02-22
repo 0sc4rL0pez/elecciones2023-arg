@@ -116,8 +116,6 @@ elif visualizacion==etapas[2]:
             )
         
         st.altair_chart(linea)
-    #idx_colors = [partidos.index(x) for x in options]
-    #st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),size=50,width=1200,height=350)
     
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
@@ -127,11 +125,9 @@ elif visualizacion==etapas[2]:
         'Fecha a predecir',
         options=agrupado['Inicio'].values.tolist())
 
-    #color=list(np.array(colores,dtype=str)[[4,3,1,2,0]]
-    df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
-    st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2)))
-    df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
-    #st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
+        df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
+        st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2)))
+        df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
 
     porcentajes = []
     for p in options:
