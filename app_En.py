@@ -220,7 +220,7 @@ elif visualizacion==etapas[0]:
         alt.X('Partido').axis(labels=False,title=' '),
         alt.Y('Cantidad',type = 'quantitative').axis(title=' '),
         alt.Column('Source',type='nominal'),
-        alt.Color('Partido',type = 'nominal').scale(domain=partidos, range=colores).legend(orient='bottom',title=' ',columns=3),
+        alt.Color('Party',type = 'nominal').scale(domain=partidos, range=colores).legend(orient='bottom',title=' ',columns=3),
         ).properties(
             width=70,
             height=220
