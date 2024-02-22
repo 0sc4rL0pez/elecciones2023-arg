@@ -52,14 +52,14 @@ if visualizacion==etapas[1]:
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
-    fecha_selec = st.select_slider(
-    'Fecha a predecir',
-    options=agrupado['Inicio'].values.tolist())
+    if len(options)>0:
+        fecha_selec = st.select_slider(
+        'Fecha a predecir',
+        options=agrupado['Inicio'].values.tolist())
 
-    df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
-    st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2))+" *")
-    df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
-    #st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
+        df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
+        st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2))+" *")
+        df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     
     porcentajes = []
     for p in options:
