@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
-etapas = ('Data','First phase', 'Second phase'')
+etapas = ('Data','First phase', 'Second phase')
 visualizacion = st.sidebar.selectbox('Visualize: ',etapas)
 
 st.header('**Elections + IA**')
