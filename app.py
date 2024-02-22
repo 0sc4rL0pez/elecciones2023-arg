@@ -92,9 +92,32 @@ elif visualizacion==etapas[2]:
         default=partidos[:2],
         placeholder='Elije una opción')
 
-    idx_colors = [partidos.index(x) for x in options]
-    st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),
-                    size=50,width=1200,height=350)
+    para_concatenar = []
+    lista_partidos = []
+    df_aux = pd.DataFrame()
+    for p in options:
+        para_concatenar += df[p].values.tolist()
+        lista_partidos += len(df)*[p]
+    if len(para_concatenar)>0:
+        df_aux['Porcentaje'] = para_concatenar
+        df_aux['Partido'] = lista_partidos
+        df_aux['Fecha'] = np.array(len(options)*df['Fecha'].values.tolist()).flatten()
+        df_aux['Fecha'] = pd.to_datetime(df_aux['Fecha'])
+        
+        linea = alt.Chart(df_aux).mark_circle(size=40).encode(
+            x='Fecha',
+            y='Porcentaje',
+            color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(
+                orient='bottom',columns = 3,labelFontSize=12,symbolSize=120
+            )
+        ).properties(
+                width=700,
+                height=320
+            )
+        
+        st.altair_chart(linea)
+    #idx_colors = [partidos.index(x) for x in options]
+    #st.scatter_chart(df,x='Fecha',y=options,color=list(np.array(colores,dtype=str)[idx_colors]),size=50,width=1200,height=350)
     
     st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
@@ -114,11 +137,11 @@ elif visualizacion==etapas[2]:
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
     aux_df['porcentajes'] = np.array(porcentajes).flatten()
-    aux_df['partido'] = options
+    aux_df['Partido'] = options
 
     pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
             theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
-            color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+            color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
     )
     text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
 
