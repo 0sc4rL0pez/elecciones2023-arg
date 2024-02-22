@@ -53,11 +53,11 @@ if visualizacion==etapas[1]:
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     fecha_selec = st.select_slider(
-    'Predicho por el modelo',
+    'Fecha a predecir',
     options=agrupado['Inicio'].values.tolist())
 
     df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
-    st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2)))
+    st.text("Puntaje (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2)))+" *"
     df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     #st.bar_chart(df_fecha_selec[options].T,height=350,use_container_width=True)
     
@@ -66,16 +66,16 @@ if visualizacion==etapas[1]:
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
     aux_df['porcentajes'] = np.array(porcentajes).flatten()
-    aux_df['partido'] = options
+    aux_df['Partido'] = options
 
     pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
             theta=alt.Theta(field="porcentajes", type="quantitative",stack=True),
-            color=alt.Color('partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+            color=alt.Color('Partido').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
     )
     text = pie.mark_text(radius=150, size=15).encode(text="porcentajes")
 
     st.altair_chart(pie+text, theme=None, use_container_width=True)
-
+    st.caption("*MSE: Error cuadrático medio")
 elif visualizacion==etapas[2]:
     st.subheader('Ballotaje')
     st.text("Encuestas en función del tiempo (Wikipedia)")
