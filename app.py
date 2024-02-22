@@ -41,7 +41,7 @@ if visualizacion==etapas[1]:
         x='Fecha',
         y='Porcentaje',
         color = alt.Color('Partido').scale(domain=partidos, range=colores).legend(
-            orient='bottom',columns = 3,labelFontSize=9,symbolSize=200
+            orient='bottom',columns = 3,labelFontSize=12,#symbolSize=100
         )
     ).properties(
             width=700,
