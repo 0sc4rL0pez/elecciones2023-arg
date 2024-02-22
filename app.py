@@ -49,7 +49,7 @@ if visualizacion==etapas[1]:
             )
         
         st.altair_chart(linea)
-    st.subheader('Modelo predictivo')
+        st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     if len(options)>0:
@@ -65,7 +65,7 @@ if visualizacion==etapas[1]:
     for p in options:
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
-    aux_df['porcentajes'] = np.array(porcentajes).flatten()
+    aux_df['porcentajes'] = np.round(np.array(porcentajes).flatten())
     aux_df['Partido'] = options
     if len(options)>0:
         pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
@@ -117,7 +117,7 @@ elif visualizacion==etapas[2]:
         
         st.altair_chart(linea)
     
-    st.subheader('Modelo predictivo')
+        st.subheader('Modelo predictivo')
     df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     if len(options)>0:
@@ -133,7 +133,7 @@ elif visualizacion==etapas[2]:
     for p in options:
         porcentajes.append(df_fecha_selec[p].values.tolist())
     aux_df = pd.DataFrame()
-    aux_df['porcentajes'] = np.array(porcentajes).flatten()
+    aux_df['porcentajes'] = np.round(np.array(porcentajes).flatten(),2)
     aux_df['Partido'] = options
     if len(options)>0:
         pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
