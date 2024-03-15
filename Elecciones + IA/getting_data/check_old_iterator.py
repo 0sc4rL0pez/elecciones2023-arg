@@ -6,30 +6,25 @@ import json
 from time import sleep
 import datetime
 
-path = 'C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/instagram/main/iteradoresV2/iteradores_viejos'
+# Code to check data from multiple json files using the method post.thaw() from instaloader
+# Not usefull right now
 
-bot = instaloader.Instaloader()
-usuario = ''
-bot.load_session_from_file(usuario)
-
-def cambiarNombre(user,direct):
-    jsonFile = open(direct, "r") # Open the JSON file for reading
-    data = json.load(jsonFile) # Read the JSON into the buffer
-    jsonFile.close() # Close the JSON file
+def changeNameJSON(user,direct):
+    # Modify in place
+    json_file = open(direct, "r") # Open the JSON file for reading
+    data = json.load(json_file) # Read the JSON into the buffer
+    json_file.close() # Close the JSON file
     
     ## Working with buffered content
     data['node']['context_username'] = user
 
     ## Save our changes to JSON file
-    jsonFile = open(direct, "w+")
-    jsonFile.write(json.dumps(data))
-    jsonFile.close()
+    json_file = open(direct, "w+")
+    json_file.write(json.dumps(data))
+    json_file.close()
 
-path = 'C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/instagram/main/iteradoresV2_new/*'
 
-dirs = glob.glob(path)
-
-def RevisarNombre(direct):
+def checkName(direct):
     jsonFile = open(direct, "r") 
     data = json.load(jsonFile) 
     jsonFile.close() 
@@ -37,7 +32,7 @@ def RevisarNombre(direct):
     res  = data['node']['context_username'] 
     return res   
 
-def descongelar_fecha(directorio,usuario,canal):
+def unFreezeDate(directorio,usuario,canal):
     bot = instaloader.Instaloader()
     bot.load_session_from_file(usuario)
     perfil = instaloader.Profile.from_username(bot.context,canal)
@@ -52,20 +47,30 @@ def descongelar_fecha(directorio,usuario,canal):
     except Exception as e:
         print(e)
 
-dias = []
-fuentes = []
+# fill with your username
+bot = instaloader.Instaloader()
+username = ''
+bot.load_session_from_file(username)
+
+#fill with path with old iterators
+path = ''
+
+dirs = glob.glob(path)
+
+days = []
+Source = []
 
 for d in dirs:
     canal = d.split('\\')[-1].split('_I')[0]
-    user = RevisarNombre(d)
-    dia = descongelar_fecha(d,user,canal)
-    dias.append(dia)
+    user = checkName(d)
+    date = unFreezeDate(d,user,canal)
+    days.append(date)
     sleep(2)
-    fuentes.append(canal)
+    Source.append(canal)
 
-df = pd.DataFrame({'fuentes':fuentes, 'Ultima_fecha':dias})
+df = pd.DataFrame({'Source':Source, 'Last_date':days})
 
-df.sort_values(by='Ultima_fecha')
-pendientes = df[df['Ultima_fecha']>datetime.datetime(2023,10,6)]['fuentes'].values.tolist()
+df.sort_values(by='Last_date')
+pendientes = df[df['Last_date']>datetime.datetime(2023,10,6)]['Source'].values.tolist()
 
 print(pendientes)
