@@ -231,7 +231,7 @@ elif visualizacion==etapas[0]:
     st.header("Posts and political post")
 
     options_partidos = st.multiselect(
-        'Partido: ',partidos,
+        'Party: ',partidos,
         default=partidos[:3]
         )
     
