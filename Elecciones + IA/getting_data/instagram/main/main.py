@@ -5,6 +5,32 @@ from functions_main import guardar_info, guardar_iterador, getUpdatedDIR,hasPass
 import glob
 
 def get_data(login_user, target_user,mode,till_date):
+
+    '''
+    Some notes:
+
+    Previously, it is necessary to create a JSON file that refers to a user's session.
+
+    To do this:
+    -You log in to an Instagram account in Mozilla Firefox
+    - Open the console and run '615_import_firefox_session.py'
+
+    (It is possible to create multiple files to work with sessions in parallel)
+
+    Then you need the names of users with a public account to obtain information
+
+    The intervals to extract information are 60 minutes for a single user with a limit of 100 posts (Check the Meta API for more information)
+    This limit can be modified if necessary. I used a 20 minute interval rotating with 3 users.
+
+    get_data(login_user, target_user, mode, day_until) function has two modes:
+    'NEW': To update recent publication data with a date limit
+    'OLD': To collect data without date limits
+
+    It is possible that errors may occur if the algorithm is used for a long time, it is advisable to:
+    -remove cache memory in browsers
+    -Update the user´s JSON files
+
+    '''
     
     counter = 0
     MAX_ITER = 110
