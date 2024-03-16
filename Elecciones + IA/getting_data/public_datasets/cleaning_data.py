@@ -1,8 +1,9 @@
 import pandas as pd
 
-# # Reviewing oficial data
+# # Reviewing oficial data 
 # See more in  https://www.argentina.gob.ar/dine/resultados-electorales
-# DON'T FORGET TO UNZIP 'raw_data.zip'
+# To get the raw data visit the following link and download the file raw_data.zip:
+# https://drive.google.com/file/d/1oTZ6d268UTRnBbipG00g9wvkI7eNi5h5/view?usp=sharing
 
 
 def buildData(df):
