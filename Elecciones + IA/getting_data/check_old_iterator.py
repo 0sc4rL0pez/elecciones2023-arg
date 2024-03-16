@@ -7,7 +7,7 @@ from time import sleep
 import datetime
 
 # Code to check data from multiple json files using the method post.thaw() from instaloader
-# Not usefull right now
+
 
 def changeNameJSON(user,direct):
     # Modify in place
@@ -53,6 +53,7 @@ username = ''
 bot.load_session_from_file(username)
 
 #fill with path with old iterators
+# You can try with 'Elecciones + IA\getting_data\instagram\main\old_iterators'
 path = ''
 
 dirs = glob.glob(path)
