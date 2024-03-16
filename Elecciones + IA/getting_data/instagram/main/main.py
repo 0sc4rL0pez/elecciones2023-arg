@@ -119,6 +119,5 @@ def getDueData(due_sources_list,wait_time_minutes,till_date, mode):
         else:
             i=0
 
-hasta = datetime(2023,11,14)
-
+#hasta = datetime(2023,11,14)
 #getDueData(sources,0,hasta,'NEW')
