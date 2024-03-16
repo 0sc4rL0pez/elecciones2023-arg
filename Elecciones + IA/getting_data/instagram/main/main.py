@@ -1,7 +1,7 @@
 import instaloader
 from datetime import datetime
 from time import sleep
-from functions_main import guardar_info, guardar_iterador, getUpdatedDIR,fecha_limite,path,sources,usuarios_unique,changeName
+from functions_main import guardar_info, guardar_iterador, getUpdatedDIR,hasPassed,path,sources,usuarios_unique,changeName
 import glob
 
 def get_data(login_user, target_user,mode,till_date):
@@ -39,8 +39,8 @@ def get_data(login_user, target_user,mode,till_date):
         print('Getting data from '+target_user+' with '+login_user+'\n Date: '+str(datetime.now()))
         for post in posts:
 
-            if(counter>=MAX_ITER or fecha_limite(date,till_date)):
-                if (fecha_limite(date,till_date)):
+            if(counter>=MAX_ITER or hasPassed(date,till_date)):
+                if (hasPassed(date,till_date)):
                     print('Actualizado!')
                     bot.close()
                     #borrarIterador()
