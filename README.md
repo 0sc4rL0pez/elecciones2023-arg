@@ -6,7 +6,7 @@ It is likely that you will have to modify the paths when reading files because I
 
 There are more details in https://www.instagram.com/oscar_ds.py/
 
-You alse can check the visualization app i created: https://elecciones2023-arg-fjxjkx2vnfgdtz3spqoy2q.streamlit.app/
+You alse can check the visualization app I created: https://elecciones2023-arg-fjxjkx2vnfgdtz3spqoy2q.streamlit.app/
 
 IMPORTANT: It is crucial to have basic knowledge of how elections work here in Argentina, so I recommend doing a little research
 
