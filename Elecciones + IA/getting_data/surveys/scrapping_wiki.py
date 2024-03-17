@@ -187,23 +187,6 @@ ballotage= getDataFrame(t,header)
 ballotage.to_csv('Elecciones + IA/getting_data/surveys/data_scraped/Survey_ballotage.csv')
 
 
-# Some plots (move it to exploratory analisis)
-partidos = ['Union por la Patria','Juntos por el Cambio', 'La Libertad Avanza','Hacemos juntos nuestro Pais', 'Frente de Izquierda y Trabajadores']
-colores = ['b','y','purple','black','r']
-plt.figure(figsize=(15,7))
-for i,p in enumerate(partidos):
-    sns.scatterplot(data=primera_vuelta,y=p,x='Final', 
-                    #ax=ploteos[i],
-                    color=colores[i])
-
-
-
-colores = ['b','y','purple','black','r']
-plt.figure(figsize=(15,7))
-for i,p in enumerate(partidos):
-    sns.scatterplot(data=primera_vuelta,y=p,x='Inicio', 
-                    #ax=ploteos[i],
-                    color=colores[i])
 
 
 
