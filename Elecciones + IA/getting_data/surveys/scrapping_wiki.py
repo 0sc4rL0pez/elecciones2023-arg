@@ -156,7 +156,7 @@ table = soup.find('table',class_ = "wikitable")
 
 primera_vuelta = getDataFrame(table,header)
 
-primera_vuelta.to_csv('Elecciones + IA/getting_data/encuestas/Encuestas_primera_vuelta_160324.csv')
+primera_vuelta.to_csv('Elecciones + IA/getting_data/surveys/data_scraped/Survey_primera_vuelta.csv')
 
 URL = "https://es.wikipedia.org/wiki/Anexo:Encuestas_de_intenci%C3%B3n_de_voto_para_las_elecciones_presidenciales_de_Argentina_de_2023#Tras_la_primera_vuelta"
 page = requests.get(URL)
@@ -167,10 +167,10 @@ header = ['Fecha', 'Encuestadora','Muestra','La Libertad Avanza', 'Union por la 
 
 ballotage= getDataFrame(t,header)
 
-ballotage.to_csv('Elecciones + IA/getting_data/encuestas/Encuestas_ballotage_160324.csv')
+ballotage.to_csv('Elecciones + IA/getting_data/surveys/data_scraped/Survey_ballotage.csv')
 
 
-# Some plots
+# Some plots (move it to exploratory analisis)
 partidos = ['Union por la Patria','Juntos por el Cambio', 'La Libertad Avanza','Hacemos juntos nuestro Pais', 'Frente de Izquierda y Trabajadores']
 colores = ['b','y','purple','black','r']
 plt.figure(figsize=(15,7))
