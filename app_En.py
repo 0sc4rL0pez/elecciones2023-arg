@@ -34,7 +34,7 @@ if visualizacion==etapas[1]:
         df_aux['Party'] = lista_partidos
         df_aux['Date'] = np.array(len(options)*df['Fecha'].values.tolist()).flatten()
         #Estaria bueno poner la fecha en español!
-        df_aux['Fecha'] = pd.to_datetime(df_aux['Fecha'],utc=True).dt.tz_convert(tz='America/Argentina/Buenos_Aires')
+        df_aux['Date'] = pd.to_datetime(df_aux['Date'],utc=True).dt.tz_convert(tz='America/Argentina/Buenos_Aires')
         
         linea = alt.Chart(df_aux).mark_circle(size=40).encode(
             x='Date',
@@ -79,7 +79,7 @@ elif visualizacion==etapas[2]:
     st.subheader('Second phase')
     st.text("Surveys through  time (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA/getting_data/encuestas/Encuestas_solo_ballotaje.csv')
+    df = pd.read_csv('Elecciones + IA/getting_data/surveys/Encuestas_solo_ballotaje.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
