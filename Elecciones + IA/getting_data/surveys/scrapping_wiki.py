@@ -27,6 +27,12 @@ dicc_month_ES = {
     }
 
 def startDate(string_date):
+    '''
+    It extracts the initial date and cast it to datetime type
+    It only works with this type of date string date
+    However I think this can be generalized
+    '''
+
     year = 2023
     splited_ = string_date.split('-')
     raw_date =  splited_[0].split(' ')
@@ -61,6 +67,12 @@ def startDate(string_date):
     return datetime.datetime(year,month,day)  
 
 def endDate(strr):
+    '''
+    Same of starDate() but with the end date, 
+    This function calls starDate() so be carefull
+    In the future i will add test cases for this function
+    '''
+
     splited_ = strr.split('-')
     
     if len(splited_)==1:
@@ -82,8 +94,14 @@ def endDate(strr):
     
     return res
 
-
 def getDataFrame(table,header):
+
+    '''
+    Returns a dataframe given and htlm table object and headers,
+    It only works with this case,
+    But again, it think this can be generalized
+    Note: Need to be tested!
+    '''
     pages_rows = table.find_all('tr')
     rows = []
 
@@ -106,29 +124,28 @@ def getDataFrame(table,header):
             pass
 
     aux_dicc = dict()
-    for atributo in header:
-        aux_dicc[atributo] = []
+    for atributte in header:
+        aux_dicc[atributte] = []
 
     for row in rows:
-        for k,celda in enumerate(row):
-            aux_dicc[header[k]].append(celda)
+        for k,celd in enumerate(row):
+            aux_dicc[header[k]].append(celd)
 
     df = pd.DataFrame(aux_dicc)
 
-    #return df
-    #Pasamos las fechas al tipo datetime.datetime
+    #Cast the string date to datetime
     df['Inicio'] = ''
     df['Final'] = ''
     df['Inicio'] = df['Fecha'].map(lambda x:startDate(x))
     df['Final'] = df['Fecha'].map(lambda x:endDate(x))
 
-    # Pasemos los valores a float
-    numericos = df.columns[2:len(header)]
-    df[numericos] = df[numericos].replace('-',0)
-    for atr in numericos:
-        aux = df[atr].map(lambda x: str(x).replace('.',''))
-        aux = aux.map(lambda x: str(x).replace(',','.'))
-        df[atr] = pd.to_numeric(aux)
+    # Cast surveys values to float
+    numerics_type = df.columns[2:len(header)]
+    df[numerics_type] = df[numerics_type].replace('-',0)
+    for attr in numerics_type:
+        formated = df[attr].map(lambda x: str(x).replace('.',''))
+        formated = formated.map(lambda x: str(x).replace(',','.'))
+        df[attr] = pd.to_numeric(formated)
         
     return df
 
