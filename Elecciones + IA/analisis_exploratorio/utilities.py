@@ -1,6 +1,7 @@
 import pyodbc
 import pandas as pd
 from  datetime import datetime
+
 def conectar_base_datos():
     SERVER = 'ACHEPE'
     DATABASE = 'elecciones-IA-data'
