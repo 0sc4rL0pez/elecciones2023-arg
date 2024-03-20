@@ -1,6 +1,6 @@
 import pyodbc
 import pandas as pd
-
+from  datetime import datetime
 def conectar_base_datos():
     SERVER = 'ACHEPE'
     DATABASE = 'elecciones-IA-data'
@@ -10,6 +10,13 @@ def conectar_base_datos():
     conn = pyodbc.connect(connectionString) 
     return conn
 
+def pasar_a_datetime(fecha):
+    #format_string = '%Y-%m-%d'
+    anio,mes,dia= fecha.split('-')
+    aux_dia = dia.split(' ')
+    if len(aux_dia)>1:dia = aux_dia[0]
+    res = datetime(int(anio),int(mes),int(dia))
+    return res
 
 def consultar(sql_statement):
     conn = conectar_base_datos()
