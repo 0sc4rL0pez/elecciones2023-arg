@@ -1,46 +1,6 @@
 import pandas as pd
-import pyodbc
-def conectar_base_datos():
-    SERVER = 'ACHEPE'
-    DATABASE = 'elecciones-IA-data'
 
-    connectionString = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={SERVER};DATABASE={DATABASE};Trusted_Connection=yes;'
-
-    conn = pyodbc.connect(connectionString) 
-    return conn
-
-def consultar(sql_statement):
-    conn = conectar_base_datos()
-    cursor = conn.cursor()
-    SQL_STATEMENT = f"""
-        {sql_statement}
-    """
-    consulta = cursor.execute(SQL_STATEMENT) 
-    return consulta 
-
-def pasar_a_DF(dat_cursor):
-
-    columnas = dat_cursor.description
-    nombre = []
-    datos = []
-
-    for i in range(len(columnas)):
-        nombre.append(columnas[i][0])
-        datos.append([])
-
-    for fila in dat_cursor:
-        for i in range(len(columnas)):
-            datos[i].append(fila[i])
-    
-    diccionario = dict()
-    for i in range(len(columnas)):
-        diccionario[nombre[i]] = datos[i]
-
-    df = pd.DataFrame(diccionario)
-
-    return df
-
-def separar_por_partido(lista_palabras):
+def separar_por_partido(data,lista_palabras):
     index_condition = []
     for pal in lista_palabras:
         index_condition.append(data['palabra_clave'] == pal)
@@ -69,14 +29,8 @@ def eliminar_repes(dataframe):
     dataframe_sin_repes = pd.concat(dataframe_sin_repes_lista)
     return dataframe_sin_repes
 
-consulta = """
-            SELECT Publicaciones.id,palabra_clave,fuente,cantidad_likes,fecha
-            FROM Publicaciones_politicas
-            LEFT JOIN Publicaciones
-            ON Publicaciones_politicas.id = Publicaciones.id
-            """
 
-data = pasar_a_DF(consultar(consulta))
+
 
 palabras_politicas = ['MILEI', 'VILLARRUEL', 'LA LIBERTAD AVANZA','JAVIER GERARDO MILEI','VICTORIA VILLARRUEL',
                       'BULLRICH', 'PETRI', 'JUNTOS POR EL CAMBIO','PATRICIA BULLRICH','LUIS PETRI',
