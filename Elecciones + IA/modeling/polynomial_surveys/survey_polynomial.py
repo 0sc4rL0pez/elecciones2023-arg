@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 
 # Check the optimization plots in plotting.ipynb
-def pasar_a_datetime(fecha):
+def stringToDatetime(fecha):
     #format_string = '%Y-%m-%d'
     anio,mes,dia= fecha.split('-')
     aux_dia = dia.split(' ')
@@ -19,10 +19,10 @@ ballotage = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/norma
 parties_primera_vuelta = primera_vuelta.columns[0:5]
 parties_ballotage = ballotage.columns[0:2]
 
-primera_vuelta['Inicio'] = primera_vuelta['Inicio'].map(lambda x:pasar_a_datetime(x))
-primera_vuelta['Final'] = primera_vuelta['Final'].map(lambda x:pasar_a_datetime(x))
-ballotage['Inicio'] = ballotage['Inicio'].map(lambda x:pasar_a_datetime(x))
-ballotage['Final'] = ballotage['Final'].map(lambda x:pasar_a_datetime(x))
+primera_vuelta['Inicio'] = primera_vuelta['Inicio'].map(lambda x:stringToDatetime(x))
+primera_vuelta['Final'] = primera_vuelta['Final'].map(lambda x:stringToDatetime(x))
+ballotage['Inicio'] = ballotage['Inicio'].map(lambda x:stringToDatetime(x))
+ballotage['Final'] = ballotage['Final'].map(lambda x:stringToDatetime(x))
 
 primera_vuelta_clean_grouped = primera_vuelta.groupby(by=['Inicio','Final'])[parties_primera_vuelta].mean().reset_index()
 ballojate_clean_grouped = ballotage.groupby(by=['Inicio','Final'])[parties_ballotage].mean().reset_index()
