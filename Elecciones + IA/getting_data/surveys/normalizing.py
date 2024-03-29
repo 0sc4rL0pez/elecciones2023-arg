@@ -1,12 +1,6 @@
 import pandas as pd
 import numpy as np
 
-primera_vuelta_clean = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/primera_vuelta_cleaned.csv')
-ballotage_clean = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/ballotage_cleaned.csv')
-
-parties_primera_vuelta = primera_vuelta_clean.columns[0:5]
-parties_ballotage = ballotage_clean.columns[0:2]
-
 def normalizePercentage(values_array):
     total = sum(values_array)
     res = 100*values_array/total
@@ -24,8 +18,15 @@ def buildNormDataFrame(data,columns):
 
     return normalize_df
 
-normalize_df_primera_vuelta = buildNormDataFrame(primera_vuelta_clean,parties_primera_vuelta)
-normalize_df_ballotage = buildNormDataFrame(ballotage_clean,parties_ballotage)
+# Normalizing poly adjustment
 
-normalize_df_primera_vuelta.to_csv('Elecciones + IA/getting_data/surveys/data_scraped/normalize_primera_vuelta.csv',index= False)
-normalize_df_ballotage.to_csv('Elecciones + IA/getting_data/surveys/data_scraped/normalize_ballotage.csv',index= False)
+primera_vuelta_poly = pd.read_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/polynomial_primera_vuelta.csv')
+ballotage_poly = pd.read_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/polynomial_ballotage.csv')
+
+parties_primera_vuelta = primera_vuelta_poly.columns[0:5]
+parties_ballotage = ballotage_poly.columns[0:2]
+normalize_df_primera_vuelta_poly = buildNormDataFrame(primera_vuelta_poly,parties_primera_vuelta)
+normalize_df_ballotage_poly = buildNormDataFrame(ballotage_poly,parties_ballotage)
+
+normalize_df_primera_vuelta_poly.to_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/normalize_primera_vuelta_poly.csv',index= False)
+normalize_df_ballotage_poly.to_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/normalize_ballotage_poly.csv',index= False)
