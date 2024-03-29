@@ -1,165 +1,65 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-
-import datetime
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import pandas as pd
+from datetime import datetime
+import os
+import matplotlib.pyplot as plt
 
 def pasar_a_datetime(fecha):
     #format_string = '%Y-%m-%d'
     anio,mes,dia= fecha.split('-')
     aux_dia = dia.split(' ')
     if len(aux_dia)>1:dia = aux_dia[0]
-    res = datetime.datetime(int(anio),int(mes),int(dia))
+    res = datetime(int(anio),int(mes),int(dia))
     return res
 
-encuestas = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_primera_vuelta.csv')
-ballojate = pd.read_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_solo_ballotaje.csv')
+primera_vuelta = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/normalize_primera_vuelta.csv')
+ballotage = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/normalize_ballotage.csv')
 
-ballojate['Inicio'] = ballojate['Inicio'].map(lambda x:pasar_a_datetime(x))
-ballojate['Final'] = ballojate['Final'].map(lambda x:pasar_a_datetime(x))
-encuestas['Inicio'] = encuestas['Inicio'].map(lambda x:pasar_a_datetime(x))
-encuestas['Final'] = encuestas['Final'].map(lambda x:pasar_a_datetime(x))
+parties_primera_vuelta = primera_vuelta.columns[0:5]
+parties_ballotage = ballotage.columns[0:2]
 
-ballojate.sort_values(by='Inicio',ascending=True,inplace=True)
-ejex = np.arange(len(ballojate))
-encuestas.sort_values(by='Inicio',ascending=True,inplace=True)
-ejex = np.arange(len(encuestas))
+primera_vuelta['Inicio'] = primera_vuelta['Inicio'].map(lambda x:pasar_a_datetime(x))
+primera_vuelta['Final'] = primera_vuelta['Final'].map(lambda x:pasar_a_datetime(x))
+ballotage['Inicio'] = ballotage['Inicio'].map(lambda x:pasar_a_datetime(x))
+ballotage['Final'] = ballotage['Final'].map(lambda x:pasar_a_datetime(x))
 
-partidos = ballojate.columns[:2]
-partidos = encuestas.columns[:5]
+primera_vuelta_clean_grouped = primera_vuelta.groupby(by=['Inicio','Final'])[parties_primera_vuelta].mean().reset_index()
+ballojate_clean_grouped = ballotage.groupby(by=['Inicio','Final'])[parties_ballotage].mean().reset_index()
 
-# Elimino el dato de las elecciones oficiales
+degrees_primera_vuelta = [6,8,8,2,2]
+degrees_ballotage = [4,4]
 
-encuestas = encuestas.iloc[:-1,:]
-
-ballojate = ballojate.iloc[:-1,:]
-
-# Y si tomo las media para fechas repetidas?
-
-encuestas.columns
-
-ballojate.columns
-
-ballotaje_median = ballojate.groupby(['Inicio','Final']).mean().reset_index()
-encuestas_median= encuestas.groupby(['Inicio','Final']).mean().reset_index()
-
-plt.figure(figsize=(15,6))
-for p in partidos:
-    plt.scatter(encuestas_median['Inicio'],encuestas_median[p],label = p,s=20)
-#plt.legend(loc='upper right',bbox_to_anchor=(1.4, 0.5))
-plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),ncol=3)
-plt.title('Encuestas (Wikipedia)')
-plt.ylabel('Porcentaje')
-
-cols_e = encuestas_median.columns.tolist()
-cols_b = ballotaje_median.columns.tolist()
-
-orden_cols_b = cols_b[2:]+cols_b[:2]
-orden_cols_e = cols_e[2:]+cols_e[:2]
-
-ballotaje_median = ballotaje_median[orden_cols_b]
-encuestas_median = encuestas_median[orden_cols_e]
-
-#encuestas_median.to_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_clean_median.csv',index=False)
-
-# # Ajuste polinomial encuestas (median)
-
-import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures
-
-# # Primera vuelta
-
-grado =4
-encuestas_polinomio_partidos = []
-
-partidos
-
-ejex = np.arange(len(encuestas_median))
-plt.figure(figsize=(15,6))
-for p in partidos:
-    
+def trainPolyModel(data,party,degree):
+    axis_x = np.arange(len(data))    
     poly_reg_model = LinearRegression()
-    poly = PolynomialFeatures(degree=grado, include_bias=False)
-    poly_features = poly.fit_transform(ejex.reshape(-1, 1))
-
-    y = encuestas_median[p].to_numpy()
+    poly = PolynomialFeatures(degree=degree, include_bias=False)
+    poly_features = poly.fit_transform(axis_x.reshape(-1, 1))
+    y = data[party].to_numpy()
     poly_reg_model.fit(poly_features, y)
-    #X_=np.linspace(ejex.min(), ejex.max(), 200).reshape(-1, 1)
     Y_=poly_reg_model.predict(poly_features)
 
-    encuestas_polinomio_partidos.append(Y_)
+    return np.round(Y_,3)
 
-    plt.plot(ejex, Y_,label=p)
-    plt.scatter(ejex,encuestas_median[p])
+def buildDataPoly(data,columns,degrees):
+    adjusted_values = np.zeros((len(data),len(columns)))
+    for i,party in enumerate(columns):
+        adjusted = trainPolyModel(data,party,degrees[i])
+        adjusted_values[:,i] = adjusted
+    poly_data_frame = pd.DataFrame(data=adjusted_values,columns=columns)
+    poly_data_frame['Inicio'] = data['Inicio']
+    poly_data_frame['Final'] = data['Final']
+    return poly_data_frame
 
-plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),ncol=5)
-plt.title('Encuestas (Ajuste con polinomio de grado 3)')
-plt.ylabel('Porcentaje')
+polynomial_primera_vuelta = buildDataPoly(primera_vuelta_clean_grouped,parties_primera_vuelta,degrees_primera_vuelta)
+polynomial_ballotage = buildDataPoly(ballojate_clean_grouped,parties_ballotage,degrees_ballotage)
 
-for i,p in enumerate(partidos):
-    encuestas_poly = encuestas_median
-    encuestas_poly[p] = encuestas_polinomio_partidos[i]
-
-plt.figure(figsize=(15,6))
-ejex = np.arange(len(encuestas_median))
-for p in partidos:
-    plt.scatter(ejex,encuestas_poly[p],label = p,s=20)
-#plt.legend(loc='upper right',bbox_to_anchor=(1.4, 0.5))
-plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),ncol=3)
-plt.title('Encuestas (Wikipedia)')
-plt.ylabel('Porcentaje')
-
-encuestas_poly.to_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_primera_vuelta_poly.csv',index=False)
-
-encuestas_poly.to_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_primera_vuelta_poly.csv',index=False)
-
-# # Ballotaje
-
-partidos = ballojate.columns[:2]
-
-partidos
-
-grado = 3
-encuestas_polinomio_partidos = []
-
-ejex = np.arange(len(ballotaje_median))
-plt.figure(figsize=(15,6))
-for p in partidos:
-    
-    poly_reg_model = LinearRegression()
-    poly = PolynomialFeatures(degree=grado, include_bias=False)
-    poly_features = poly.fit_transform(ejex.reshape(-1, 1))
-
-    y = ballotaje_median[p].to_numpy()
-    poly_reg_model.fit(poly_features, y)
-    #X_=np.linspace(ejex.min(), ejex.max(), 200).reshape(-1, 1)
-    Y_=poly_reg_model.predict(poly_features)
-
-    encuestas_polinomio_partidos.append(Y_)
-
-    plt.plot(ejex, Y_,label=p)
-    plt.scatter(ejex,ballotaje_median[p])
-
-plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),ncol=5)
-plt.title('Encuestas (Ajuste con polinomio de grado 3)')
-plt.ylabel('Porcentaje')
-
-for i,p in enumerate(partidos):
-    ballotaje_poly = ballotaje_median
-    ballotaje_poly[p] = encuestas_polinomio_partidos[i]
-
-plt.figure(figsize=(15,6))
-ejex = np.arange(len(ballotaje_median))
-for p in partidos:
-    plt.scatter(ejex,ballotaje_poly[p],label = p,s=20)
-#plt.legend(loc='upper right',bbox_to_anchor=(1.4, 0.5))
-plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),ncol=3)
-plt.title('Encuestas (Wikipedia)')
-plt.ylabel('Porcentaje')
-
-ballotaje_poly.to_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/getting_data/encuestas/Encuestas_ballotaje_poly.csv',index=False)
-
+polynomial_primera_vuelta.to_csv('Elecciones + IA\modeling\polynomial_surveys\polynomial_primera_vuelta.csv',index= False)
+polynomial_ballotage.to_csv('Elecciones + IA\modeling\polynomial_surveys\polynomial_ballotage.csv',index= False)
 
 
 
