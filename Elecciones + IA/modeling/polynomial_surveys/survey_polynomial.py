@@ -1,14 +1,10 @@
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
 import pandas as pd
 from datetime import datetime
-import os
-import matplotlib.pyplot as plt
 
+# Check the optimization plots in plotting.ipynb
 def pasar_a_datetime(fecha):
     #format_string = '%Y-%m-%d'
     anio,mes,dia= fecha.split('-')
