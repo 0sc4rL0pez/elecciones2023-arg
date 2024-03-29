@@ -1,63 +1,63 @@
 import pandas as pd
 
-def separar_por_partido(data,lista_palabras):
-    index_condition = []
-    for pal in lista_palabras:
-        index_condition.append(data['palabra_clave'] == pal)
-    index = (index_condition[0])
-    for idx in index_condition:
-        index = index | (idx) 
+def max_likes(id:str,dataFrame:pd.DataFrame):
+    res = dataFrame[dataFrame['id'] == id]['cantidad_likes'].idxmax()
+    return dataFrame.loc[[res]]
 
-    df = data[index]
-    return df
+def deleteDuplicates(dataframe):
+    dataframe_with_out_duplicates_list = []
+    for id in dataframe['id'].unique():
+        row = max_likes(id,dataframe)
+        dataframe_with_out_duplicates_list.append(row)
 
-def max_cant_likes(id:str,df:pd.DataFrame):
-    # try:
-    res = df[df['id'] == id]['cantidad_likes'].idxmax()
-    return df.loc[[res]][['cantidad_likes','fecha','fuente']]
-    # except ValueError:
-    #     id_list.append(id)
-    #     return None
+    dataframe_with_out_duplicates = pd.concat(dataframe_with_out_duplicates_list)
+    return dataframe_with_out_duplicates
 
-def eliminar_repes(dataframe):
-    dataframe_sin_repes_lista = []
-    for i in dataframe['id'].unique():
-        fila = max_cant_likes(i,dataframe)
-        # if fila != None:
-        dataframe_sin_repes_lista.append(fila)
+def isSubstring(string,subsequence):
+    return subsequence in string
 
-    dataframe_sin_repes = pd.concat(dataframe_sin_repes_lista)
-    return dataframe_sin_repes
+def searchPostsKeyWord(data,key_word,party):
+    index_is_in = data['descripcion'].map(lambda x: isSubstring(str(x),key_word))
+    res =  data[index_is_in][['id','fuente','cantidad_likes','fecha']]
+    res['partido'] = party
+    return res
 
+def buildPartyDataFrame(party,key_words_party):
+    res_list = []
+    for key_word in key_words_party:
+        df_key_word = searchPostsKeyWord(raw_posts,key_word,party)
+        res_list.append(df_key_word)
+    res = pd.concat(res_list)
+    deleteDuplicates(res)
+    return res
 
+key_words = [
+            'MILEI', 'VILLARRUEL', 'LA LIBERTAD AVANZA',
+            'BULLRICH', 'PETRI', 'JUNTOS POR EL CAMBIO',
+            'MASSA', 'ROSSI', 'UNIÓN POR LA PATRIA',
+            'Bregman', 'del Caño', 'Frente de Izquierda y de Trabajadores',
+            'Schiaretti', 'Randazzo', 'Hacemos juntos nuestro Pais'
+            ]
 
+key_words = [x.lower() for x in key_words]
 
-palabras_politicas = ['MILEI', 'VILLARRUEL', 'LA LIBERTAD AVANZA','JAVIER GERARDO MILEI','VICTORIA VILLARRUEL',
-                      'BULLRICH', 'PETRI', 'JUNTOS POR EL CAMBIO','PATRICIA BULLRICH','LUIS PETRI',
-                      'MASSA', 'ROSSI', 'UNIÓN POR LA PATRIA','SERGIO TOMAS MASSA','AGUSTIN ROSSI',
-                      'Bregman', 'del Caño', 'Frente de Izquierda y de Trabajadores','Myriam Bregman','Nicolás del Caño',
-                      'Schiaretti', 'Randazzo', 'Hacemos juntos nuestro Pais','Juan Schiaretti', 'Florencio Randazzo']
+dicc_parties_key_word = {
+    'La Libertad Avanza':key_words[0:3],
+    'Juntos por el Cambio':key_words[3:6],
+    'Union por la Patria':key_words[6:9],
+    'Frente de Izquierda y de Trabajadores':key_words[9:12],
+    'Hacemos Nuestro Pais':key_words[12:15]
+}
 
-LLA_con_repes = separar_por_partido(palabras_politicas[:5])
-JXC_con_repes = separar_por_partido(palabras_politicas[5:10])
-UP_con_repes = separar_por_partido(palabras_politicas[10:15])
-FIT_con_repes = separar_por_partido(palabras_politicas[15:20])
-HNP_con_repes = separar_por_partido(palabras_politicas[20:25])
+#WARNING: This dir doesn't exists by default!
+#Before running this code unzip de file: Elecciones + IA\data_base\data_base_csv\Publicaciones.zip
+raw_posts = pd.read_csv('Elecciones + IA\data_base\data_base_csv\Publicaciones\Publicaciones\Publicaciones.csv')
+raw_posts['descripcion'] = raw_posts['descripcion'].map(lambda x:str(x).lower())
 
-LLA = eliminar_repes(LLA_con_repes)
-UPLP = eliminar_repes(UP_con_repes)
-JXPC = eliminar_repes(JXC_con_repes)
-FDIZ = eliminar_repes(FIT_con_repes)
-HNP = eliminar_repes(HNP_con_repes)
+df_parties = []
+for party,key_words_party in dicc_parties_key_word.items():
+    df_party = buildPartyDataFrame(party,key_words_party)
+    df_parties.append(df_party)
 
-publicaciones_politicas = pd.concat([LLA,UPLP,JXPC,FDIZ,HNP])
-
-publicaciones_politicas['Partido'] = '?'
-
-publicaciones_politicas.loc[LLA.index,'Partido'] = 'La Libertad Avanza'
-publicaciones_politicas.loc[UPLP.index,'Partido'] = 'Union por la Patria'
-publicaciones_politicas.loc[JXPC.index,'Partido'] = 'Juntos por el Cambio'
-publicaciones_politicas.loc[HNP.index,'Partido'] = 'Hacemos juntos nuestro Pais'
-publicaciones_politicas.loc[FDIZ.index,'Partido'] = 'Frente de Izquierda y Trabajadores'
-
-publicaciones_politicas.to_csv('C:/Users/54911/OneDrive/Escritorio/Data Science/Elecciones + IA/modeling/Preparando_datos/publicaciones_politicas.csv',index=False)
+political_posts = pd.concat(df_parties)
+political_posts.to_csv('Elecciones + IA/modeling/Preparando_datos/political_posts.csv',index=False)
