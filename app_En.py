@@ -12,7 +12,7 @@ if visualizacion==etapas[1]:
     st.subheader('First phase')
     st.text("Surveys through  time (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/Survey_primera_vuelta.csv')
+    df = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/primera_vuelta_cleaned.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
@@ -29,11 +29,12 @@ if visualizacion==etapas[1]:
     for p in options:
         para_concatenar += df[p].values.tolist()
         lista_partidos += len(df)*[p]
+
     if len(para_concatenar)>0:
         df_aux['Percentage'] = para_concatenar
         df_aux['Party'] = lista_partidos
         df_aux['Date'] = np.array(len(options)*df['Fecha'].values.tolist()).flatten()
-        #Estaria bueno poner la fecha en español!
+        
         df_aux['Date'] = pd.to_datetime(df_aux['Date'],utc=True).dt.tz_convert(tz='America/Argentina/Buenos_Aires')
         
         linea = alt.Chart(df_aux).mark_circle(size=40).encode(
@@ -79,7 +80,7 @@ elif visualizacion==etapas[2]:
     st.subheader('Second phase')
     st.text("Surveys through  time (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/Survey_ballotage.csv')
+    df = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/ballotage_cleaned.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
