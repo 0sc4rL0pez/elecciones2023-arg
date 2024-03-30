@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-political_posts = pd.read_csv('Elecciones + IA/modeling/Preparing_data/political_posts.csv')
+political_posts = pd.read_csv('Elecciones + IA/data_base/political_posts.csv')
 
 primera_vuelta_poly = pd.read_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/normalize_primera_vuelta_poly.csv')
 ballotaje_poly = pd.read_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/normalize_ballotage_poly.csv')
