@@ -12,7 +12,7 @@ if visualizacion==etapas[1]:
     st.subheader('First phase')
     st.text("Surveys through  time (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA/dashboard/primera_vuelta_poly_encuestas.csv')
+    df = pd.read_csv('Elecciones + IA\modeling\polynomial_surveys\data_built\polynomial_primera_vuelta.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
