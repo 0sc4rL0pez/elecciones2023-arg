@@ -79,7 +79,7 @@ elif visualizacion==etapas[2]:
     st.subheader('Second phase')
     st.text("Surveys through  time (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA/getting_data/surveys/Encuestas_solo_ballotaje.csv')
+    df = pd.read_csv('Elecciones + IA\getting_data\surveys\data_scraped\Survey_ballotage.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
