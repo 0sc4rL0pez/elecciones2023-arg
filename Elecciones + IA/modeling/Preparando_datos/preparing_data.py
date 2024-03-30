@@ -10,18 +10,19 @@ parties_primera_vuelta = primera_vuelta_poly.columns[0:5]
 parties_ballotage = ballotaje_poly.columns[0:2]
 
 #Filtering posts with outliers amoun of post by range date given by surveys
-amount_posts = np.zeros(len(primera_vuelta_poly))
-for i in range (len(primera_vuelta_poly)):
-    indx_row = i
-    start = primera_vuelta_poly.iloc[indx_row]['Inicio']
-    end = primera_vuelta_poly.iloc[indx_row]['Final']
-    aux = political_posts[(political_posts['fecha']>start)& (political_posts['fecha']<end)]
-    amount_posts[i] = len(aux)
+def filteringPostsBySurveys(survey,posts_data):
+    amount_posts = np.zeros(len(survey))
+    for i in range (len(survey)):
+        indx_row = i
+        start = survey.iloc[indx_row]['Inicio']
+        end = survey.iloc[indx_row]['Final']
+        aux = posts_data[(posts_data['fecha']>start)& (posts_data['fecha']<end)]
+        amount_posts[i] = len(aux)
 
-amount_max = np.quantile(amount_posts,0.95)
-amount_min = np.quantile(amount_posts,0.1)
-filtered_index =  np.nonzero((amount_posts>amount_min) & (amount_posts<amount_max))
-primera_vuelta_poly_filtered = primera_vuelta_poly.iloc[filtered_index]
+    amount_max = np.quantile(amount_posts,0.95)
+    amount_min = np.quantile(amount_posts,0.1)
+    filtered_index =  np.nonzero((amount_posts>amount_min) & (amount_posts<amount_max))
+    return survey.iloc[filtered_index]
 
 def selecPostDate(survey, posts_data):
     res = []
@@ -35,7 +36,11 @@ def selecPostDate(survey, posts_data):
 
     return res
 
-separated_date_posts = selecPostDate(primera_vuelta_poly_filtered,political_posts)
+primera_vuelta_poly_filtered = filteringPostsBySurveys(primera_vuelta_poly,political_posts)
+separated_date_posts_primera_vuelta = selecPostDate(primera_vuelta_poly_filtered,political_posts)
+
+ballotage_poly_filtered = filteringPostsBySurveys(ballotaje_poly,political_posts)
+separated_date_posts_ballotage = selecPostDate(ballotage_poly_filtered,political_posts)
 
 def max_likes(id:str,dataFrame:pd.DataFrame):
     res = dataFrame[dataFrame['id'] == id]['cantidad_likes'].idxmax()
@@ -73,12 +78,13 @@ def preparingX(party,separated_date_posts):
     for i in range(len(separated_date_posts)):
         df_posts_ranged= separated_date_posts[i]
         df_posts_ranged_party = df_posts_ranged[df_posts_ranged['partido']==party]
-        df_posts_ranged_party = deleteDuplicates(df_posts_ranged_party)
+        if not df_posts_ranged_party.empty:
+            df_posts_ranged_party = deleteDuplicates(df_posts_ranged_party)
 
-        amount_source = df_posts_ranged_party['fuente'].value_counts()
-        grouped_mean = df_posts_ranged_party.groupby('fuente').mean(numeric_only=True)['cantidad_likes']
+            amount_source = df_posts_ranged_party['fuente'].value_counts()
+            grouped_mean = df_posts_ranged_party.groupby('fuente').mean(numeric_only=True)['cantidad_likes']
 
-        rows_x[i] = buildRow(amount_source,grouped_mean)
+            rows_x[i] = buildRow(amount_source,grouped_mean)
     
     df_x = pd.DataFrame(data=rows_x,columns=columns)
     return df_x
@@ -98,8 +104,14 @@ def preparingY(surveys,party):
     res['Target'] = diff_relative
     return res
 
-party = parties_primera_vuelta[2]
-data_x = preparingX(party,separated_date_posts)
-data_y = preparingY(primera_vuelta_poly_filtered,party)
-data_structured = pd.concat([data_x,data_y],axis=1)
-data_structured.to_csv('Elecciones + IA/modeling/Preparando_datos/data_structured_1.csv')
+for party in parties_primera_vuelta:
+    data_x = preparingX(party,separated_date_posts_primera_vuelta)
+    data_y = preparingY(primera_vuelta_poly_filtered,party)
+    data_structured = pd.concat([data_x,data_y],axis=1)
+    data_structured.to_csv(f'Elecciones + IA/modeling/Preparando_datos/data_primera_vuelta_{party}.csv',index=False)
+
+for party in parties_ballotage:
+    data_x = preparingX(party,separated_date_posts_ballotage)
+    data_y = preparingY(ballotage_poly_filtered,party)
+    data_structured = pd.concat([data_x,data_y],axis=1)
+    data_structured.to_csv(f'Elecciones + IA/modeling/Preparando_datos/data_ballotage_{party}.csv',index=False)
