@@ -12,7 +12,7 @@ if visualizacion==etapas[1]:
     st.subheader('Primera vuelta')
     st.text("Encuestas en función del tiempo (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA\modeling\polynomial_surveys\data_built\polynomial_primera_vuelta.csv')
+    df = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/primera_vuelta_cleaned.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
@@ -80,7 +80,7 @@ elif visualizacion==etapas[2]:
     st.subheader('Ballotaje')
     st.text("Encuestas en función del tiempo (Wikipedia)")
 
-    df = pd.read_csv('Elecciones + IA\getting_data\surveys\data_scraped\Survey_ballotage.csv')
+    df = pd.read_csv('Elecciones + IA/getting_data/surveys/data_scraped/ballotage_cleaned.csv')
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)

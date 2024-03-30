@@ -50,7 +50,8 @@ if visualizacion==etapas[1]:
         
         st.altair_chart(linea)
         st.subheader('Machine learning model')
-    df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
+        st.text('Doing some changes...')
+    '''df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     if len(options)>0:
         fecha_selec = st.select_slider(
@@ -75,7 +76,7 @@ if visualizacion==etapas[1]:
         text = pie.mark_text(radius=150, size=15).encode(text="Percentage")
     
         st.altair_chart(pie+text, theme=None, use_container_width=True)
-    st.caption("*MSE: Mean squared error")
+    st.caption("*MSE: Mean squared error")'''
 elif visualizacion==etapas[2]:
     st.subheader('Second phase')
     st.text("Surveys through  time (Wikipedia)")
@@ -117,7 +118,10 @@ elif visualizacion==etapas[2]:
         st.altair_chart(linea)
     
         st.subheader('Machine learning model')
-    df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
+        st.text('Doing some changes...')
+    
+    
+    '''df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
     agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     if len(options)>0:
         fecha_selec = st.select_slider(
@@ -142,7 +146,7 @@ elif visualizacion==etapas[2]:
         text = pie.mark_text(radius=150, size=15).encode(text="Percentage")
     
         st.altair_chart(pie+text, theme=None, use_container_width=True)
-    st.caption("*MSE: Mean squared error")
+    st.caption("*MSE: Mean squared error")'''
 
 elif visualizacion==etapas[0]:
     ################################# DATOS #######################################################
