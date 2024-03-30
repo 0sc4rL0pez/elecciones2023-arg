@@ -60,4 +60,4 @@ for party,key_words_party in dicc_parties_key_word.items():
     df_parties.append(df_party)
 
 political_posts = pd.concat(df_parties)
-political_posts.to_csv('Elecciones + IA/modeling/Preparando_datos/political_posts.csv',index=False)
+political_posts.to_csv('Elecciones + IA/modeling/Preparing_data/political_posts.csv',index=False)

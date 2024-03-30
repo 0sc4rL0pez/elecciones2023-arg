@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-political_posts = pd.read_csv('Elecciones + IA/modeling/Preparando_datos/political_posts.csv')
+political_posts = pd.read_csv('Elecciones + IA/modeling/Preparing_data/political_posts.csv')
 
 primera_vuelta_poly = pd.read_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/normalize_primera_vuelta_poly.csv')
 ballotaje_poly = pd.read_csv('Elecciones + IA/modeling/polynomial_surveys/data_built/normalize_ballotage_poly.csv')
@@ -82,7 +82,7 @@ def preparingX(party,separated_date_posts):
             df_posts_ranged_party = deleteDuplicates(df_posts_ranged_party)
 
             amount_source = df_posts_ranged_party['fuente'].value_counts()
-            grouped_mean = df_posts_ranged_party.groupby('fuente').mean(numeric_only=True)['cantidad_likes']
+            grouped_mean = df_posts_ranged_party.groupby('fuente').mean(numeric_only=True)['cantidad_likes'].round(2)
 
             rows_x[i] = buildRow(amount_source,grouped_mean)
     
@@ -108,10 +108,10 @@ for party in parties_primera_vuelta:
     data_x = preparingX(party,separated_date_posts_primera_vuelta)
     data_y = preparingY(primera_vuelta_poly_filtered,party)
     data_structured = pd.concat([data_x,data_y],axis=1)
-    data_structured.to_csv(f'Elecciones + IA/modeling/Preparando_datos/data_primera_vuelta_{party}.csv',index=False)
+    data_structured.to_csv(f'Elecciones + IA/modeling/Preparing_data/data_primera_vuelta_{party}.csv',index=False)
 
 for party in parties_ballotage:
     data_x = preparingX(party,separated_date_posts_ballotage)
     data_y = preparingY(ballotage_poly_filtered,party)
     data_structured = pd.concat([data_x,data_y],axis=1)
-    data_structured.to_csv(f'Elecciones + IA/modeling/Preparando_datos/data_ballotage_{party}.csv',index=False)
+    data_structured.to_csv(f'Elecciones + IA/modeling/Preparing_data/data_ballotage_{party}.csv',index=False)
