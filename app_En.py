@@ -51,32 +51,33 @@ if visualizacion==etapas[1]:
         st.altair_chart(linea)
         st.subheader('Machine learning model')
         st.text('Doing some changes...')
-    '''df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
-    agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
-    if len(options)>0:
-        fecha_selec = st.select_slider(
-        'Input date',
-        options=agrupado['Inicio'].values.tolist())
 
-        df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
-        st.text("Score (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2))+" *")
-        df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
+    # df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
+    # agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
+    # if len(options)>0:
+    #     fecha_selec = st.select_slider(
+    #     'Input date',
+    #     options=agrupado['Inicio'].values.tolist())
+
+    #     df_fecha_selec = agrupado[agrupado['Inicio']==fecha_selec]
+    #     st.text("Score (-MSE): "+str(round(df_fecha_selec['Scores'].values[0],2))+" *")
+    #     df_fecha_selec = df_fecha_selec.rename(index={0:'Porcentaje'})
     
-    porcentajes = []
-    for p in options:
-        porcentajes.append(df_fecha_selec[p].values.tolist())
-    aux_df = pd.DataFrame()
-    aux_df['Percentage'] = np.round(np.array(porcentajes).flatten())
-    aux_df['Party'] = options
-    if len(options)>0:
-        pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
-                theta=alt.Theta(field="Percentage", type="quantitative",stack=True),
-                color=alt.Color('Party').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
-        )
-        text = pie.mark_text(radius=150, size=15).encode(text="Percentage")
+    # porcentajes = []
+    # for p in options:
+    #     porcentajes.append(df_fecha_selec[p].values.tolist())
+    # aux_df = pd.DataFrame()
+    # aux_df['Percentage'] = np.round(np.array(porcentajes).flatten())
+    # aux_df['Party'] = options
+    # if len(options)>0:
+    #     pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
+    #             theta=alt.Theta(field="Percentage", type="quantitative",stack=True),
+    #             color=alt.Color('Party').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+    #     )
+    #     text = pie.mark_text(radius=150, size=15).encode(text="Percentage")
     
-        st.altair_chart(pie+text, theme=None, use_container_width=True)
-    st.caption("*MSE: Mean squared error")'''
+    #     st.altair_chart(pie+text, theme=None, use_container_width=True)
+    # st.caption("*MSE: Mean squared error")
 elif visualizacion==etapas[2]:
     st.subheader('Second phase')
     st.text("Surveys through  time (Wikipedia)")
@@ -121,32 +122,32 @@ elif visualizacion==etapas[2]:
         st.text('Doing some changes...')
     
     
-    '''df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
-    agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
-    if len(options)>0:
-        fecha_selec = st.select_slider(
-        'Input date',
-        options=agrupado['Inicio'].values.tolist())
+    # df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_ballotaje.csv')
+    # agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
+    # if len(options)>0:
+    #     fecha_selec = st.select_slider(
+    #     'Input date',
+    #     options=agrupado['Inicio'].values.tolist())
 
-        df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
-        st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2))+" *")
-        df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
+    #     df_fecha_selec_aux = agrupado[agrupado['Inicio']==fecha_selec]
+    #     st.text("Puntaje (-MSE): "+str(round(df_fecha_selec_aux['Scores'].values[0],2))+" *")
+    #     df_fecha_selec = df_fecha_selec_aux.rename(index={0:'Porcentaje'})
 
-    porcentajes = []
-    for p in options:
-        porcentajes.append(df_fecha_selec[p].values.tolist())
-    aux_df = pd.DataFrame()
-    aux_df['Percentage'] = np.round(np.array(porcentajes).flatten(),2)
-    aux_df['Party'] = options
-    if len(options)>0:
-        pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
-                theta=alt.Theta(field="Percentage", type="quantitative",stack=True),
-                color=alt.Color('Party').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
-        )
-        text = pie.mark_text(radius=150, size=15).encode(text="Percentage")
+    # porcentajes = []
+    # for p in options:
+    #     porcentajes.append(df_fecha_selec[p].values.tolist())
+    # aux_df = pd.DataFrame()
+    # aux_df['Percentage'] = np.round(np.array(porcentajes).flatten(),2)
+    # aux_df['Party'] = options
+    # if len(options)>0:
+    #     pie = alt.Chart(aux_df).mark_arc(innerRadius=60,outerRadius=120).encode(
+    #             theta=alt.Theta(field="Percentage", type="quantitative",stack=True),
+    #             color=alt.Color('Party').scale(domain=partidos, range=colores).legend(orient='top-right',columns = 1)
+    #     )
+    #     text = pie.mark_text(radius=150, size=15).encode(text="Percentage")
     
-        st.altair_chart(pie+text, theme=None, use_container_width=True)
-    st.caption("*MSE: Mean squared error")'''
+    #     st.altair_chart(pie+text, theme=None, use_container_width=True)
+    # st.caption("*MSE: Mean squared error")
 
 elif visualizacion==etapas[0]:
     ################################# DATOS #######################################################
