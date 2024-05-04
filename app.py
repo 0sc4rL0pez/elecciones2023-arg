@@ -150,7 +150,7 @@ elif visualizacion==etapas[2]:
 elif visualizacion==etapas[0]:
     ################################# DATOS #######################################################
 
-    df_megusta_pub_pol = pd.read_csv('Elecciones + IA/modeling/Preparando_datos/publicaciones_politicas.csv')
+    df_megusta_pub_pol = pd.read_csv('Elecciones + IA/modeling/Preparing_data/publicaciones_politicas.csv')
     partidos = df_megusta_pub_pol['Partido'].unique()
     fuentes = df_megusta_pub_pol['fuente'].unique()
     colores = ['#A71FCC','#137DCC','#CCCA27','#D12437','#180D73']
