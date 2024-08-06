@@ -5,6 +5,7 @@ import altair as alt
 
 etapas = ('Datos','Primera vuelta', 'Ballotage')
 visualizacion = st.sidebar.selectbox('Visualizar: ',etapas)
+idiomas = st.sidebar.selectbox('Language: ',('Spanish','English'))
 
 st.header('**Elecciones + IA**')
 
