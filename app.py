@@ -17,7 +17,7 @@ if visualizacion==etapas[1]:
 
     df['Inicio'] = pd.to_datetime(df['Inicio'])
     df.rename(columns={'Inicio':'Fecha'},inplace=True)
-    partidos = df.columns[2:7].to_list()
+    partidos = df.columns[:5].to_list()
 
     colores = ['#137DCC','#CCCA27','#A71FCC','#180D73','#D12437']
     options = st.multiselect(
@@ -52,6 +52,7 @@ if visualizacion==etapas[1]:
         st.altair_chart(linea)
         st.subheader('Modelo predictivo')
         st.text('Haciendo algunos cambios...')
+
     # df_predicc = pd.read_csv('Elecciones + IA/dashboard/predicciones_score_df_prim.csv')
     # agrupado = df_predicc.groupby(['Inicio']).mean(numeric_only=True)[partidos + ['Scores']].reset_index()
     # if len(options)>0:
